@@ -5,7 +5,7 @@ function dump_wordpress_databases() {
 
   echo "Search for Wordpress DB to dump: "
 
-  # Parse arguments
+  # Parse arguments on assign root dir et backup dir
   while [ $# -gt 0 ]; do
     case "$1" in
       --root-dir=*)
@@ -28,27 +28,27 @@ function dump_wordpress_databases() {
     exit 1
   fi
 
-  # Count the number of WordPress installations in $ROOT_DIR
+  # Count the number of Prestashop installations in $ROOT_DIR
   for INSTALLATION_DIR in "$ROOT_DIR"/*/; do
-    if [ -f "$INSTALLATION_DIR/wp-config.php" ]; then
+    if [ -f "$INSTALLATION_DIR/app/config/parameters.php" ]; then
       count=$((count+1))
     fi
   done
   
   # Output the number of installations found or a message if none are found
   if [ $count -eq 0 ]; then
-    echo "No WordPress installations found in $ROOT_DIR"
+    echo "No Prestashop installations found in $ROOT_DIR"
   else
-    echo "$count WordPress DB found"
+    echo "$count Prestashop DB found"
   fi
 
-  # Dump the databases for each WordPress installation
+  # Dump the databases for each Prestashop installation
   for INSTALLATION_DIR in "$ROOT_DIR"/*/; do
-    if [ -f "$INSTALLATION_DIR/wp-config.php" ]; then
-      # Extract the database connection details from wp-config.php
-      DATABASE=$(grep -oP "define\(\s*'DB_NAME'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/wp-config.php")
-      DB_USER=$(grep -oP "define\(\s*'DB_USER'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/wp-config.php")
-      DB_PASSWORD=$(grep -oP "define\(\s*'DB_PASSWORD'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/wp-config.php")
+    if [ -f "$INSTALLATION_DIR/app/config/parameters.php" ]; then
+      # Extract the database connection details from w/app/config/parameters.php
+      DATABASE=$(grep -oP "define\(\s*'database_name'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
+      DB_USER=$(grep -oP "define\(\s*'database_user'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
+      DB_PASSWORD=$(grep -oP "define\(\s*'database_password'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
       # If a database name is found, create a backup file
       if [ -n "$DATABASE" ]; then
         DATE=$(date +"%Y-%m-%d")

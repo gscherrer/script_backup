@@ -41,12 +41,12 @@ create_htaccess_file "$DIR_INSTALLATION" "$DIR_DB_BACKUP"
 # Source the Restic configuration file to access the variables defined in it
 source "$RESTIC_CONF"
 
-# Check if WordPress automatic backup is enabled
+# Check if Prestashop automatic backup is enabled
 if [ "$restic_wp_backup_enable" == "true" ]; then
-	# Dump WP DB 
+	# Dump Prestashop DB 
 	dump_wordpress_databases --root-dir=$DIR_WP --backup-dir=$DIR_DB_BACKUP
 else
-	echo "[!] Automatic backup of all WordPress DBs disabled."
+	echo "[!] Automatic backup of all Prestashop DBs disabled."
 fi
 
 # Dump other MySQL DB if any listed
