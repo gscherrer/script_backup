@@ -41,12 +41,12 @@ create_htaccess_file "$DIR_INSTALLATION" "$DIR_DB_BACKUP"
 # Source the Restic configuration file to access the variables defined in it
 source "$RESTIC_CONF"
 
-# Check if Prestashop automatic backup is enabled
+# Check if WordPress automatic backup is enabled
 if [ "$restic_wp_backup_enable" == "true" ]; then
-	# Dump Prestashop DB 
+	# Dump WP DB 
 	dump_wordpress_databases --root-dir=$DIR_WP --backup-dir=$DIR_DB_BACKUP
 else
-	echo "[!] Automatic backup of all Prestashop DBs disabled."
+	echo "[!] Automatic backup of all WordPress DBs disabled."
 fi
 
 # Dump other MySQL DB if any listed
@@ -87,31 +87,23 @@ echo "Sending the log file by email."
 # Read the exit status from the temporary file
 read RESTIC_EXIT < /tmp/restic_exit.tmp
 rm /tmp/restic_exit.tmp  # Clean up the temporary file
-
 case $RESTIC_EXIT in
   0)
 	RESTIC_EXIT_SBJ="O2Switch backup succeed: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Restic snapshot created successfully!"
-	echo $RESTIC_EXIT_MSG
 	;;
   1)
 	RESTIC_EXIT_SBJ="O2Switch backup failed: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Fatal error: no snapshot created"
-	echo "Sending the log file by email."
-	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
 	;;
   3)
 	RESTIC_EXIT_SBJ="O2Switch backup incomplete: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Incomplete snapshot created: some source data could not be read"
-	echo "Sending the log file by email."
-	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
 	;;
   *)
 	RESTIC_EXIT_SBJ="O2Switch backup error: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Unknown error occurred"
-	echo "Sending the log file by email."
-	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
 	;;
 esac
 
-# echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
+echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
