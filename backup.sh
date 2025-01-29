@@ -12,7 +12,7 @@ DIR_INSTALLATION_scripts="$HOME/scripts"
 # Define the installation directory for the script backup
 DIR_INSTALLATION="$HOME/scripts/backup"
 # Define the directory of your wordpress installations - default is $HOME
-DIR_WP="$HOME/public_html"
+DIR_WP="$HOME"
 # Define the directory to store database dump
 DIR_DB_BACKUP="$DIR_ROOT/backup-db"
 # Define the directory of the action script relative to the executing script

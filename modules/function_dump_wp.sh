@@ -46,9 +46,9 @@ function dump_wordpress_databases() {
   for INSTALLATION_DIR in "$ROOT_DIR"/*/; do
     if [ -f "$INSTALLATION_DIR/app/config/parameters.php" ]; then
       # Extract the database connection details from w/app/config/parameters.php
-      DATABASE=$(grep -oP "\s*'database_name' =>'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
-      DB_USER=$(grep -oP "\s*'database_user' =>'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
-      DB_PASSWORD=$(grep -oP "\s*'database_password' => 'K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
+      DATABASE=$(grep -oP "'database_name'\s*=>\s*'([^']*)'"  /home/sc3scgu7201/public_html/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/')
+      DB_USER=$(grep -oP "'database_user'\s*=>\s*'([^']*)'"  /home/sc3scgu7201/public_html/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/') 
+      DB_PASSWORD=$(grep -oP "'database_password'\s*=>\s*'([^']*)'"  /home/sc3scgu7201/public_html/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/')
       echo "Dumping database: $DATABASE"
       echo "User: $DB_USER"
       echo "Password: $DB_PASSWORD"
