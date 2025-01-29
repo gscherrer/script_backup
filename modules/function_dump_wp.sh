@@ -49,6 +49,9 @@ function dump_wordpress_databases() {
       DATABASE=$(grep -oP "define\(\s*'database_name'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
       DB_USER=$(grep -oP "define\(\s*'database_user'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
       DB_PASSWORD=$(grep -oP "define\(\s*'database_password'\s*,\s*'\K[^']+" "$INSTALLATION_DIR/app/config/parameters.php")
+      echo "Dumping database: $DATABASE"
+      echo "User: $DB_USER"
+      echo "Password: $DB_PASSWORD"
       # If a database name is found, create a backup file
       if [ -n "$DATABASE" ]; then
         DATE=$(date +"%Y-%m-%d")
