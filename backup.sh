@@ -6,7 +6,7 @@
 # Get the directory of the currently executing script
 DIR_SCRIPT="$(dirname "$(readlink -f "$0")")"
 # Define the root directory
-DIR_ROOT="$HOME"
+DIR_ROOT="$HOME/public_html"
 # Define the installation directory for the scripts in general
 DIR_INSTALLATION_scripts="$HOME/scripts"
 # Define the installation directory for the script backup
