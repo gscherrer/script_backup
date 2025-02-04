@@ -2,7 +2,7 @@
 function create_restic_conf_file {
   # Overwrite the settings in the conf file
   echo '# Set the Restic repository' > "$RESTIC_CONF"
-  echo 'restic_repo="rclone:kdrive:backup/wordpress/XXXX"' >> "$RESTIC_CONF"
+  echo 'restic_repo="rclone:kdrive:backup/prestashop/XXXX"' >> "$RESTIC_CONF"
   echo '#restic_repo="rclone:example:O2switch/R1"' >> "$RESTIC_CONF"
   echo '# Define how many days of backup restic should preserve' >> "$RESTIC_CONF"
   echo 'restic_keep_days=15d' >> "$RESTIC_CONF"
