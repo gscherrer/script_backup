@@ -47,7 +47,7 @@ function dump_wordpress_databases() {
   # Dump the databases for each Prestashop installation
   for INSTALLATION_DIR in "$ROOT_DIR"/*/; do
     if [ -f "$INSTALLATION_DIR/app/config/parameters.php" ]; then
-      # Extract the database connection details from w/app/config/parameters.php
+      # Extract the database connection details from /app/config/parameters.php
       DATABASE=$(grep -oP "'database_name'\s*=>\s*'([^']*)'"  $DIR_TO_BACKUP/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/')
       DB_USER=$(grep -oP "'database_user'\s*=>\s*'([^']*)'" $DIR_TO_BACKUP/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/') 
       DB_PASSWORD=$(grep -oP "'database_password'\s*=>\s*'([^']*)'"  $DIR_TO_BACKUP/public_html/app/config/parameters.php | cut -d ' ' -f 3 | sed 's/^.\(.*\).$/\1/')
