@@ -64,7 +64,8 @@ done < "$EXCLUDED_DIRS_FILE"
 
 # Restic will backup all directories located in $DIR_ROOT except the one listed for exclusion.
 echo "Start to backup your data to your restic repo."
-echo "Backup directory: $DIR_ROOT"
+$BACKUP_DIR="$DIR_ROOT/$SITE_NAME"
+echo "Backup directory: $BACKUP_DIR"
 
 restic backup $DIR_ROOT --repo $restic_repo -p $RESTIC_PWD_FILE $exclude_flags
 RESTIC_EXIT=$?
@@ -96,15 +97,19 @@ case $RESTIC_EXIT in
   1)
 	RESTIC_EXIT_SBJ="O2Switch backup failed: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Fatal error: no snapshot created"
+	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
+
 	;;
   3)
 	RESTIC_EXIT_SBJ="O2Switch backup incomplete: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Incomplete snapshot created: some source data could not be read"
+	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
+
 	;;
   *)
 	RESTIC_EXIT_SBJ="O2Switch backup error: $restic_log_file"
 	RESTIC_EXIT_MSG="Hi! Unknown error occurred"
+	echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
 	;;
 esac
 
-echo $RESTIC_EXIT_MSG | mailx -s "$RESTIC_EXIT_SBJ" -a "$DIR_SCRIPT_LOGS/$restic_log_file" $restic_receive_email
