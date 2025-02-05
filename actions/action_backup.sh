@@ -64,7 +64,7 @@ done < "$EXCLUDED_DIRS_FILE"
 
 # Restic will backup all directories located in $DIR_ROOT except the one listed for exclusion.
 echo "Start to backup your data to your restic repo."
-$DIR_TO_BACKUP="$DIR_ROOT/$SITE_NAME"
+DIR_TO_BACKUP="$DIR_ROOT/$SITE_NAME"
 echo "Backup directory: $DIR_TO_BACKUP"
 
 restic backup $DIR_TO_BACKUP --repo $restic_repo -p $RESTIC_PWD_FILE $exclude_flags
