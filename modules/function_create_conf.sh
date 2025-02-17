@@ -1,27 +1,3 @@
-# Function to create/overwrite the Restic configuration file
-function create_restic_conf_file {
-  # Overwrite the settings in the conf file
-  echo '# Set the Restic repository' > "$RESTIC_CONF"
-  echo 'restic_repo="rclone:kdrive:backup/prestashop/XXXX"' >> "$RESTIC_CONF"
-  echo '#restic_repo="rclone:example:O2switch/R1"' >> "$RESTIC_CONF"
-  echo '# Define how many days of backup restic should preserve' >> "$RESTIC_CONF"
-  echo 'restic_keep_days=15d' >> "$RESTIC_CONF"
-  echo '# Define which day of the month, restic should clean the backup repository' >> "$RESTIC_CONF"
-  echo 'restic_clean_day=15' >> "$RESTIC_CONF"
-  echo '# Define log file name' >> "$RESTIC_CONF"
-  echo 'restic_log_file=$(date +"%Y-%m-%d-%H-%M")"_backup.txt"' >> "$RESTIC_CONF"
-  echo '# Define how many days we keep the log files' >> "$RESTIC_CONF"
-  echo 'restic_log_days=90' >> "$RESTIC_CONF"
-  echo '# Define how many days we keep the MySQL dump' >> "$RESTIC_CONF"
-  echo 'restic_dump_days=15' >> "$RESTIC_CONF"
-  echo '# DEFINE RECEIVER EMAIL' >> "$RESTIC_CONF"
-  echo 'restic_receive_email="contact@gabrimi.fr"' >> "$RESTIC_CONF"
-  # Add new configuration for enabling/disabling WordPress backups
-  echo '# Enable or Disable automatic backup of all WordPress databases. Set to true to enable, false to disable.' >> "$RESTIC_CONF"
-  echo 'restic_wp_backup_enable=true' >> "$RESTIC_CONF"
-}
-
-
 # Function to create/overwrite the Restic password file
 function create_restic_pwd_file {
 
@@ -29,7 +5,6 @@ function create_restic_pwd_file {
   echo "INPUT_YOUR_RESTIC_REPO_PASSWORD_HERE" > "$RESTIC_PWD_FILE"
   echo "Restic password file created at $RESTIC_PWD_FILE. Edit it before launching the backup script again."
 }
-
 
 function create_db_others_file() {
   # Check if the db-others file exists, if not create it with sample content

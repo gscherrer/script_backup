@@ -3,6 +3,9 @@
 # VARIABLES 
 #############
 
+#Dossier à sauvegarder
+NOM_SITE="XXX"
+
 # Get the directory of the currently executing script
 DIR_SCRIPT="$(dirname "$(readlink -f "$0")")"
 # Define the root directory
@@ -12,9 +15,9 @@ DIR_INSTALLATION_scripts="$HOME/scripts"
 # Define the installation directory for the script backup
 DIR_INSTALLATION="$HOME/scripts/backup"
 # Define the directory of your wordpress installations - default is $HOME
-DIR_WP="$HOME/NOM_SITE"
+DIR_WP="$HOME/$NOM_SITE"
 # Define the directory to store database dump
-DIR_DB_BACKUP="$DIR_ROOT/backup-db"
+DIR_DB_BACKUP="$HOME/$NOM_SITE/backup-db"
 # Define the directory of the action script relative to the executing script
 DIR_SCRIPT_ACTIONS="$DIR_SCRIPT/actions"
 # Define the directory of the functions relative to the executing script
